@@ -1,0 +1,3 @@
+InsertBook: Success
+InsertBook: Success
+BorrowBook: Book 1 is not available. Patron 101 added to the waitlist.
