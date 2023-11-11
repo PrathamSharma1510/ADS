@@ -218,6 +218,7 @@ class RedBlackTree:
         # If not already reserved, add the patron to the waitlist
         reservation = Reservation(patronID, patronPriority)
         reservation_result = reservationHeap.insert(reservation)
+        book_node.reservations.append(patronID)
         if reservation_result == "Waitlist is full":
             return "Unable to reserve book; waitlist is full."
         return f"Book {bookID} is not available. Patron {patronID} added to the waitlist."
@@ -281,6 +282,7 @@ class RedBlackTree:
     def print_book(self, bookID):
         node = self.search_book(bookID)
         if node is not None and node != self.NIL:
+            # availability = "No" if node.borrowedBy is not None else "Yes"
             book_info = (
                 f"BookID = {node.bookID}\n"
                 f"Title = {node.bookName}\n"
@@ -343,9 +345,9 @@ class RedBlackTree:
         if bookID1 <= node.bookID <= bookID2:
             book_info = (
                 f"BookID = {node.bookID}\n"
-                f"Title = \"{node.bookName}\"\n"
-                f"Author = \"{node.authorName}\"\n"
-                f"Availability = \"{('Yes' if node.availabilityStatus == 'Yes' else 'No')}\"\n"
+                f"Title = {node.bookName}\n"
+                f"Author = {node.authorName}\n"
+                f"Availability = {node.availabilityStatus}\n"
                 f"BorrowedBy = {node.borrowedBy if node.borrowedBy is not None else 'None'}\n"
                 f"Reservations= {node.reservations}"
             )

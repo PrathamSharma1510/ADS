@@ -16,13 +16,18 @@ def main(file_name):
                     # Split the arguments and unpack the first four
                     split_args = [arg.strip() for arg in args[0].split(',')]
                     bookID, bookName, authorName, availabilityStatus = split_args[:4]
+                    
+                    # Remove double quotes from availabilityStatus
+                    availabilityStatus = availabilityStatus.strip('"')
+
                     # Check if borrowedBy is provided, else set it to None
                     borrowedBy = split_args[4] if len(split_args) > 4 else None
                     success = rbt.insert_book(int(bookID), bookName, authorName, availabilityStatus, borrowedBy)
                     o.write(f'InsertBook: {"Success" if success else "Failed"}\n')
                 except ValueError as e:
                     o.write(f'InsertBook: Failed - {str(e)}\n')
-                    continue  # Skip to the next line because of the error
+                    continue
+
 
             elif re.match(r"PrintBooks\((.+)\)", line):
                 try:
@@ -32,7 +37,7 @@ def main(file_name):
                     # Call the function to get books info in the range
                     books_info = rbt.print_books_in_range(bookID1, bookID2)
                     # Write the formatted books info to the output
-                    o.write('PrintBooks:\n' + books_info + '\n')
+                    o.write(books_info)
                 except ValueError as e:
                     # If there's an error, such as not being able to convert to int, write an error message
                     o.write('Error in processing PrintBooks command: ' + str(e) + '\n')
@@ -41,7 +46,7 @@ def main(file_name):
                 try:
                     bookID = int(args[0])
                     book_info = rbt.print_book(bookID)
-                    o.write(f'PrintBook:\n{book_info}\n')
+                    o.write(book_info)
                 except ValueError as e:
                     o.write(f'Error processing PrintBook command: {str(e)}\n')
 
