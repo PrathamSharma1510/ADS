@@ -1,54 +1,59 @@
-BookID = 1
-Title = "Book1"
-Author = "Author1"
-Availability = "Yes"
-BorrowedBy = None
-Reservations= []
+Book 2 Borrowed by Patron 2001
 
-Book 1 Borrowed by Patron 101
-
-Book 1 Reserved by Patron 102
-
-Book 1 Reserved by Patron 103
-
-BookID = 1
-Title = "Book1"
-Author = "Author1"
-Availability = No
-BorrowedBy = 101
-Reservations= [102, 103]
+Book 2 Reserved by Patron 3002
 
 BookID = 2
 Title = "Book2"
-Author = "Author2"
-Availability = Yes
-BorrowedBy = None
-Reservations= []
-
-Book 1 returned by Patron 101
-Book 1 Allotted to Patron 103.
-BookID = 1
-Title = "Book1"
 Author = "Author1"
 Availability = "No"
-BorrowedBy = 103
-Reservations= [102]
+BorrowedBy = 2001
+Reservations= [3002]
 
-Book 1 returned by Patron 103
-Book 1 Allotted to Patron 102.
-BookID = 1
-Title = "Book1"
-Author = "Author1"
-Availability = "No"
-BorrowedBy = 102
-Reservations= []
+Book 5 Borrowed by Patron 3002
 
-Book 1 returned by Patron 102. Now available for borrowing.
-BookID = 1
-Title = "Book1"
+Book 2 Reserved by Patron 1003
+
+BookID = 4
+Title = "Book4"
 Author = "Author1"
 Availability = "Yes"
 BorrowedBy = None
 Reservations= []
 
-Quit: Terminating the program.
+Book 4 Borrowed by Patron 2010
+
+BookID = 2
+Title = "Book2"
+Author = "Author1"
+Availability = No
+BorrowedBy = 2001
+Reservations= [3002, 1003]
+
+BookID = 4
+Title = "Book4"
+Author = "Author1"
+Availability = No
+BorrowedBy = 2010
+Reservations= []
+
+BookID = 5
+Title = "Book5"
+Author = "Author3"
+Availability = No
+BorrowedBy = 3002
+Reservations= []
+
+Book 2 Reserved by Patron 2010
+
+Book 2 Reserved by Patron 1004
+
+Book 2 returned by Patron 2001
+Book 2 Allotted to Patron 3002.
+Book 4 returned by Patron 2010. Now available for borrowing.
+BookID = 4
+Title = "Book4"
+Author = "Author1"
+Availability = "Yes"
+BorrowedBy = None
+Reservations= []
+

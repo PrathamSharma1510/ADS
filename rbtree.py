@@ -216,7 +216,7 @@ class RedBlackTree:
             return f"Patron {patronID} has already reserved the book {bookID}.\n"
 
         # If not already reserved, add the patron to the waitlist
-        reservation = Reservation(patronID, patronPriority)
+        reservation = Reservation(patronID, bookID, patronPriority)
         reservation_result = reservationHeap.insert(reservation)
         book_node.reservations.append(patronID)
         if reservation_result == "Waitlist is full":
@@ -231,24 +231,29 @@ class RedBlackTree:
         if book_node is None or book_node == self.NIL:
             return "Book not found."
 
-        # Check if the book is being returned by the patron who borrowed it
         if book_node.borrowedBy != patronID:
             return f"Book {bookID} is not borrowed by Patron {patronID}."
 
-        # Check if there are any reservations
-        if reservationHeap.heap:
-            # Allocate the book to the next patron in the heap
-            next_reservation = reservationHeap.extract_min()
-            if next_reservation.patronID in book_node.reservations:
-                book_node.reservations.remove(next_reservation.patronID)
-            book_node.borrowedBy = next_reservation.patronID
-            book_node.availabilityStatus = "No"  # The book is still borrowed, but by a different patron
-            return f"Book {bookID} returned by Patron {patronID}\nBook {bookID} Allotted to Patron {next_reservation.patronID}."
-        else:
-            # No reservations, so mark the book as available
-            book_node.availabilityStatus = "Yes"
-            book_node.borrowedBy = None
-            return f"Book {bookID} returned by Patron {patronID}. Now available for borrowing."
+        # If there are reservations, check if the next reservation is for this book
+        while reservationHeap.heap:
+            next_reservation = reservationHeap.peek()  # Check the next reservation without removing it
+            if next_reservation.bookID == bookID:
+                # This reservation is for the current book, so proceed to allocate it
+                reservationHeap.extract_min()  # Now remove the reservation from the heap
+                if next_reservation.patronID in book_node.reservations:
+                    book_node.reservations.remove(next_reservation.patronID)
+                book_node.borrowedBy = next_reservation.patronID
+                book_node.availabilityStatus = "No"
+                return f"Book {bookID} returned by Patron {patronID}\nBook {bookID} Allotted to Patron {next_reservation.patronID}."
+            else:
+                # The next reservation is not for this book, so remove it and check the next one
+                reservationHeap.extract_min()
+
+        # If we reach here, there are no reservations for this book
+        book_node.availabilityStatus = "Yes"
+        book_node.borrowedBy = None
+        return f"Book {bookID} returned by Patron {patronID}. Now available for borrowing."
+
 
 
     def delete_book(self, bookID):

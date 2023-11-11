@@ -2,8 +2,9 @@ import heapq
 from time import time
 
 class Reservation:
-    def __init__(self, patronID, priorityNumber, timestamp=None):
+    def __init__(self, patronID, bookID, priorityNumber, timestamp=None):
         self.patronID = patronID
+        self.bookID = bookID  # Add this line to include bookID in the reservation
         self.priorityNumber = priorityNumber
         self.timestamp = timestamp if timestamp else time()
     
@@ -13,7 +14,8 @@ class Reservation:
         return self.priorityNumber < other.priorityNumber
 
     def __repr__(self):
-        return f"({self.patronID}, {self.priorityNumber}, {self.timestamp})"
+        return f"({self.patronID}, {self.bookID}, {self.priorityNumber}, {self.timestamp})"
+
 
 class ReservationHeap:
     def __init__(self):
