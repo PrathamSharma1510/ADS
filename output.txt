@@ -1,3 +1,17 @@
 InsertBook: Success
 InsertBook: Success
-BorrowBook: Book 1 is not available. Patron 101 added to the waitlist.
+PrintBook:
+BookID = 1
+Title = "Book1"
+Author = "Author1"
+Availability = ""Yes""
+BorrowedBy = None
+Reservations= []
+BorrowBook: Book 1 Borrowed by Patron 101
+PrintBook:
+BookID = 1
+Title = "Book1"
+Author = "Author1"
+Availability = "No"
+BorrowedBy = 101
+Reservations= []

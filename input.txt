@@ -1,3 +1,5 @@
 InsertBook(1, "Book1", "Author1", "Yes")
 InsertBook(2, "Book1", "Author1", "Yes")
+PrintBook(1)
 BorrowBook(101, 1, 1)
+PrintBook(1)

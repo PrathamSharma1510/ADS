@@ -56,10 +56,6 @@ def main(file_name):
                 result = rbt.return_book(patronID, bookID, rh)
                 o.write(f'ReturnBook: {result}\n')
 
-            # elif "BorrowBook" in line:
-            #     patronID, bookID, patronPriority = map(int, args[0].split(','))
-            #     result_message = rbt.borrow_book(patronID, bookID, patronPriority, rh)
-            #     o.write(f'BorrowBook: {result_message}\n')
                 
             elif "DeleteBook" in line:
                 bookID = int(args[0])

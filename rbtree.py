@@ -197,24 +197,31 @@ class RedBlackTree:
         book_node = self.search_book(bookID)
         if book_node is None or book_node == self.NIL:
             return "Book not found."
-
-        # If the book is available and no one else has borrowed it, lend it to the patron
-        elif book_node.availabilityStatus.lower() == "yes" and book_node.borrowedBy is None:
-            book_node.availabilityStatus = "No"  # Update the availability status
-            book_node.borrowedBy = patronID  # Update with the ID of the patron who borrowed the book
+        availability_status = book_node.availabilityStatus.strip('\"').lower()
+        # If the book is available (not borrowed by anyone), lend it to the patron
+        if availability_status == "yes" and book_node.borrowedBy==None:
+            book_node.availabilityStatus = "No"# Update the availability status
+            book_node.borrowedBy = patronID 
+            print(f"After borrowing: BookID: {book_node.bookID}, Availability: {book_node.availabilityStatus}, BorrowedBy: {book_node.borrowedBy}")
+            print("hey") # Update with the ID of the patron who borrowed the book
             return f"Book {bookID} Borrowed by Patron {patronID}"
 
-        # If the book is not available, add the patron to the waitlist if they are not already on it
-        elif book_node.borrowedBy != patronID:
-            # Check if the patron has already made a reservation
-            if any(reservation.patronID == patronID for reservation in reservationHeap.heap):
-                return f"Patron {patronID} has already reserved the book {bookID}."
-            else:
-                # Add the patron to the reservation heap with the given priority and current timestamp
-                reservationHeap.insert(Reservation(patronID, patronPriority))
-                return f"Book {bookID} is not available. Patron {patronID} added to the waitlist."
-        else:
-            return f"Patron {patronID} has already borrowed the book {bookID}."
+        # If the book is already borrowed by the same patron, return a message
+        if book_node.borrowedBy == patronID:
+            return f"Patron {patronID} has already borrowed Book {bookID}."
+
+        # If the book is borrowed by another patron, add the current patron to the waitlist
+        # but first, check if the patron has already reserved the book
+        if any(reservation.patronID == patronID for reservation in reservationHeap.heap):
+            return f"Patron {patronID} has already reserved the book {bookID}."
+
+        # If not already reserved, add the patron to the waitlist
+        reservation = Reservation(patronID, patronPriority)
+        reservation_result = reservationHeap.insert(reservation)
+        if reservation_result == "Waitlist is full":
+            return "Unable to reserve book; waitlist is full."
+        return f"Book {bookID} is not available. Patron {patronID} added to the waitlist."
+
 
 
 
@@ -278,7 +285,7 @@ class RedBlackTree:
                 f"BookID = {node.bookID}\n"
                 f"Title = {node.bookName}\n"
                 f"Author = {node.authorName}\n"
-                f"Availability = \"{('Yes' if node.availabilityStatus else 'No')}\"\n"
+                f"Availability = \"{node.availabilityStatus}\"\n"
                 f"BorrowedBy = {node.borrowedBy if node.borrowedBy is not None else 'None'}\n"
                 f"Reservations= {node.reservations}"
             )
