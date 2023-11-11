@@ -1,13 +1,16 @@
-InsertBook: Success
 BookID = 1
 Title = "Book1"
 Author = "Author1"
 Availability = "Yes"
 BorrowedBy = None
-Reservations= []BorrowBook: Book 1 Borrowed by Patron 101
-InsertBook: Success
-BorrowBook: Book 1 is not available. Patron 102 added to the waitlist.
-BorrowBook: Book 1 is not available. Patron 103 added to the waitlist.
+Reservations= []
+
+Book 1 Borrowed by Patron 101
+
+Book 1 Reserved by Patron 102
+
+Book 1 Reserved by Patron 103
+
 BookID = 1
 Title = "Book1"
 Author = "Author1"
@@ -21,3 +24,31 @@ Author = "Author2"
 Availability = Yes
 BorrowedBy = None
 Reservations= []
+
+Book 1 returned by Patron 101
+Book 1 Allotted to Patron 103.
+BookID = 1
+Title = "Book1"
+Author = "Author1"
+Availability = "No"
+BorrowedBy = 103
+Reservations= [102]
+
+Book 1 returned by Patron 103
+Book 1 Allotted to Patron 102.
+BookID = 1
+Title = "Book1"
+Author = "Author1"
+Availability = "No"
+BorrowedBy = 102
+Reservations= []
+
+Book 1 returned by Patron 102. Now available for borrowing.
+BookID = 1
+Title = "Book1"
+Author = "Author1"
+Availability = "Yes"
+BorrowedBy = None
+Reservations= []
+
+Quit: Terminating the program.

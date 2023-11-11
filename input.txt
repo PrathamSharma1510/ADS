@@ -1,7 +1,0 @@
-InsertBook(1, "Book1", "Author1", "Yes")
-PrintBook(1)
-BorrowBook(101, 1, 1)
-InsertBook(2, "Book2", "Author2", "Yes")
-BorrowBook(102, 1, 2)
-BorrowBook(103, 1, 4)
-PrintBooks(1,2)

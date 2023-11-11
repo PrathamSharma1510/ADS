@@ -23,7 +23,7 @@ def main(file_name):
                     # Check if borrowedBy is provided, else set it to None
                     borrowedBy = split_args[4] if len(split_args) > 4 else None
                     success = rbt.insert_book(int(bookID), bookName, authorName, availabilityStatus, borrowedBy)
-                    o.write(f'InsertBook: {"Success" if success else "Failed"}\n')
+                    # o.write(f'InsertBook: {"Success" if success else "Failed"}\n')
                 except ValueError as e:
                     o.write(f'InsertBook: Failed - {str(e)}\n')
                     continue
@@ -37,7 +37,7 @@ def main(file_name):
                     # Call the function to get books info in the range
                     books_info = rbt.print_books_in_range(bookID1, bookID2)
                     # Write the formatted books info to the output
-                    o.write(books_info)
+                    o.write(f'{books_info}\n\n')
                 except ValueError as e:
                     # If there's an error, such as not being able to convert to int, write an error message
                     o.write('Error in processing PrintBooks command: ' + str(e) + '\n')
@@ -46,7 +46,7 @@ def main(file_name):
                 try:
                     bookID = int(args[0])
                     book_info = rbt.print_book(bookID)
-                    o.write(book_info)
+                    o.write(f'{book_info}\n\n')
                 except ValueError as e:
                     o.write(f'Error processing PrintBook command: {str(e)}\n')
 
@@ -54,12 +54,12 @@ def main(file_name):
             elif "BorrowBook" in line:
                 patronID, bookID, patronPriority = map(int, args[0].split(','))
                 result = rbt.borrow_book(patronID, bookID, patronPriority, rh)
-                o.write(f'BorrowBook: {result}\n')
+                o.write(f'{result}\n')
 
             elif "ReturnBook" in line:
                 patronID, bookID = map(int, args[0].split(','))
                 result = rbt.return_book(patronID, bookID, rh)
-                o.write(f'ReturnBook: {result}\n')
+                o.write(f'{result}\n')
 
                 
             elif "DeleteBook" in line:

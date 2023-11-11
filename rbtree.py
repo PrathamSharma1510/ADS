@@ -202,18 +202,18 @@ class RedBlackTree:
         if availability_status == "yes" and book_node.borrowedBy==None:
             book_node.availabilityStatus = "No"# Update the availability status
             book_node.borrowedBy = patronID 
-            print(f"After borrowing: BookID: {book_node.bookID}, Availability: {book_node.availabilityStatus}, BorrowedBy: {book_node.borrowedBy}")
-            print("hey") # Update with the ID of the patron who borrowed the book
-            return f"Book {bookID} Borrowed by Patron {patronID}"
+            # print(f"After borrowing: BookID: {book_node.bookID}, Availability: {book_node.availabilityStatus}, BorrowedBy: {book_node.borrowedBy}")
+            # print("hey") # Update with the ID of the patron who borrowed the book
+            return f"Book {bookID} Borrowed by Patron {patronID}\n"
 
         # If the book is already borrowed by the same patron, return a message
         if book_node.borrowedBy == patronID:
-            return f"Patron {patronID} has already borrowed Book {bookID}."
+            return f"Patron {patronID} has already borrowed Book {bookID}.\n"
 
         # If the book is borrowed by another patron, add the current patron to the waitlist
         # but first, check if the patron has already reserved the book
         if any(reservation.patronID == patronID for reservation in reservationHeap.heap):
-            return f"Patron {patronID} has already reserved the book {bookID}."
+            return f"Patron {patronID} has already reserved the book {bookID}.\n"
 
         # If not already reserved, add the patron to the waitlist
         reservation = Reservation(patronID, patronPriority)
@@ -221,11 +221,34 @@ class RedBlackTree:
         book_node.reservations.append(patronID)
         if reservation_result == "Waitlist is full":
             return "Unable to reserve book; waitlist is full."
-        return f"Book {bookID} is not available. Patron {patronID} added to the waitlist."
+        return f"Book {bookID} Reserved by Patron {patronID}\n"
 
 
 
 
+    def return_book(self, patronID, bookID, reservationHeap):
+        book_node = self.search_book(bookID)
+        if book_node is None or book_node == self.NIL:
+            return "Book not found."
+
+        # Check if the book is being returned by the patron who borrowed it
+        if book_node.borrowedBy != patronID:
+            return f"Book {bookID} is not borrowed by Patron {patronID}."
+
+        # Check if there are any reservations
+        if reservationHeap.heap:
+            # Allocate the book to the next patron in the heap
+            next_reservation = reservationHeap.extract_min()
+            if next_reservation.patronID in book_node.reservations:
+                book_node.reservations.remove(next_reservation.patronID)
+            book_node.borrowedBy = next_reservation.patronID
+            book_node.availabilityStatus = "No"  # The book is still borrowed, but by a different patron
+            return f"Book {bookID} returned by Patron {patronID}\nBook {bookID} Allotted to Patron {next_reservation.patronID}."
+        else:
+            # No reservations, so mark the book as available
+            book_node.availabilityStatus = "Yes"
+            book_node.borrowedBy = None
+            return f"Book {bookID} returned by Patron {patronID}. Now available for borrowing."
 
 
     def delete_book(self, bookID):
