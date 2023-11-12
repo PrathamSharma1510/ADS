@@ -80,7 +80,7 @@ def main(file_name):
 
 
             elif "ColorFlipCount" in line:
-                count = rbt.color_flip_count()
+                count = rbt.color_flip_count  # Access the attribute directly, without parentheses
                 o.write(f'ColorFlipCount: {count}\n')
 
             elif "Quit" in line:

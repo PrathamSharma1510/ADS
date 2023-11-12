@@ -68,38 +68,50 @@ class RedBlackTree:
             if k.parent == k.parent.parent.right:
                 u = k.parent.parent.left
                 if u.color == 1:
-                    # Color flip
+                    # Before flipping, check if the color actually changes
+                    if u.color != k.parent.parent.color:
+                        self.increment_color_flip_count()
+
                     u.color = 0
                     k.parent.color = 0
                     k.parent.parent.color = 1
-                    self.increment_color_flip_count()
+                    
                     k = k.parent.parent
                 else:
                     if k == k.parent.left:
                         k = k.parent
                         self.right_rotate(k)
+                    if k.parent.color != k.parent.parent.color:
+                        self.increment_color_flip_count()
+
                     k.parent.color = 0
                     k.parent.parent.color = 1
                     self.left_rotate(k.parent.parent)
             else:
                 u = k.parent.parent.right
                 if u.color == 1:
-                    # Color flip
+                    if u.color != k.parent.parent.color:
+                        self.increment_color_flip_count()
+
                     u.color = 0
                     k.parent.color = 0
                     k.parent.parent.color = 1
-                    self.increment_color_flip_count()
+                    
                     k = k.parent.parent
                 else:
                     if k == k.parent.right:
                         k = k.parent
                         self.left_rotate(k)
+                    if k.parent.color != k.parent.parent.color:
+                        self.increment_color_flip_count()
+
                     k.parent.color = 0
                     k.parent.parent.color = 1
                     self.right_rotate(k.parent.parent)
             if k == self.root:
                 break
         self.root.color = 0
+
 
     def insert_book(self, bookID, bookName, authorName, availabilityStatus, borrowedBy=None):
         node = Node(bookID, bookName, authorName, availabilityStatus, borrowedBy)
@@ -140,57 +152,72 @@ class RedBlackTree:
             u.parent.right = v
         v.parent = u.parent
 
+   
     def fix_delete(self, x):
         while x != self.root and x.color == 0:
             if x == x.parent.left:
                 s = x.parent.right
                 if s.color == 1:
-                    # Color flip
+                    self.increment_color_flip_count()
                     s.color = 0
                     x.parent.color = 1
                     self.left_rotate(x.parent)
-                    self.increment_color_flip_count()
                     s = x.parent.right
+
                 if s.left.color == 0 and s.right.color == 0:
                     s.color = 1
                     x = x.parent
                 else:
                     if s.right.color == 0:
+                        if s.left.color == 1:
+                            self.increment_color_flip_count()
                         s.left.color = 0
                         s.color = 1
                         self.right_rotate(s)
                         s = x.parent.right
+
+                    if s.right.color == 1:
+                        self.increment_color_flip_count()
                     s.color = x.parent.color
                     x.parent.color = 0
                     s.right.color = 0
                     self.left_rotate(x.parent)
                     x = self.root
             else:
+                # Symmetric cases for right child
                 s = x.parent.left
                 if s.color == 1:
-                    # Color flip
+                    self.increment_color_flip_count()
                     s.color = 0
                     x.parent.color = 1
                     self.right_rotate(x.parent)
-                    self.increment_color_flip_count()
                     s = x.parent.left
+
                 if s.right.color == 0 and s.left.color == 0:
                     s.color = 1
                     x = x.parent
                 else:
                     if s.left.color == 0:
+                        if s.right.color == 1:
+                            self.increment_color_flip_count()
                         s.right.color = 0
                         s.color = 1
                         self.left_rotate(s)
                         s = x.parent.left
+
+                    if s.left.color == 1:
+                        self.increment_color_flip_count()
                     s.color = x.parent.color
                     x.parent.color = 0
                     s.left.color = 0
                     self.right_rotate(x.parent)
                     x = self.root
+
         if x.color == 0:
             x.color = 1
             self.increment_color_flip_count()
+
+
 
 
     def borrow_book(self, patronID, bookID, patronPriority, reservationHeap):

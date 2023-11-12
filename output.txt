@@ -50,10 +50,9 @@ Book 2 Reserved by Patron 1004
 Book 2 returned by Patron 2001
 Book 2 Allotted to Patron 3002.
 Book 4 returned by Patron 2010. Now available for borrowing.
-BookID = 4
-Title = "Book4"
-Author = "Author1"
-Availability = "Yes"
-BorrowedBy = None
-Reservations= []
-
+FindClosestBook: BookID: 4, BookName: "Book4", AuthorName: "Author1", AvailabilityStatus: Yes, BorrowedBy: None
+FindClosestBook: BookID: 2, BookName: "Book2", AuthorName: "Author1", AvailabilityStatus: No, BorrowedBy: 3002
+FindClosestBook: BookID: 3, BookName: "Book3", AuthorName: "Author4", AvailabilityStatus: Yes, BorrowedBy: None
+DeleteBook: True
+ColorFlipCount: 1
+Quit: Terminating the program.
