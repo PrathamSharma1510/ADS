@@ -65,16 +65,25 @@ def main(file_name):
             elif "DeleteBook" in line:
                 bookID = int(args[0])
                 result = rbt.delete_book(bookID)
-                o.write(f'DeleteBook: {result}\n')
+                o.write(f'{result}\n\n')
 
             elif "FindClosestBook" in line:
                 targetID = int(args[0])
                 closest_books = rbt.find_closest_book(targetID)
+                closest_books.reverse()
                 if closest_books:
                     for book in closest_books:
-                        book_info = f"BookID: {book.bookID}, BookName: {book.bookName}, AuthorName: {book.authorName}, " \
-                                    f"AvailabilityStatus: {book.availabilityStatus}, BorrowedBy: {book.borrowedBy}"
-                        o.write(f'FindClosestBook: {book_info}\n')
+                        # book_info = f"BookID: {book.bookID}, BookName: {book.bookName}, AuthorName: {book.authorName}, " \
+                        #             f"AvailabilityStatus: {book.availabilityStatus}, BorrowedBy: {book.borrowedBy}"
+                        book_info = (
+                                        f"BookID = {book.bookID}\n"
+                                        f"Title = {book.bookName}\n"
+                                        f"Author = {book.authorName}\n"
+                                        f"Availability = \"{book.availabilityStatus}\"\n"
+                                        f"BorrowedBy = {book.borrowedBy if book.borrowedBy is not None else 'None'}\n"
+                                        f"Reservations= {book.reservations}\n"
+                                    )
+                        o.write(f'{book_info}\n')
                 else:
                     o.write('FindClosestBook: No closest book found.\n')
 
