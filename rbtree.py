@@ -63,55 +63,6 @@ class RedBlackTree:
         x.right = y
         y.parent = x
 
-    def fix_insert(self, k):
-        while k.parent and k.parent.color == 1:
-            if k.parent == k.parent.parent.right:
-                u = k.parent.parent.left
-                if u.color == 1:
-                    # Before flipping, check if the color actually changes
-                    if u.color != k.parent.parent.color:
-                        self.increment_color_flip_count()
-
-                    u.color = 0
-                    k.parent.color = 0
-                    k.parent.parent.color = 1
-                    
-                    k = k.parent.parent
-                else:
-                    if k == k.parent.left:
-                        k = k.parent
-                        self.right_rotate(k)
-                    if k.parent.color != k.parent.parent.color:
-                        self.increment_color_flip_count()
-
-                    k.parent.color = 0
-                    k.parent.parent.color = 1
-                    self.left_rotate(k.parent.parent)
-            else:
-                u = k.parent.parent.right
-                if u.color == 1:
-                    if u.color != k.parent.parent.color:
-                        self.increment_color_flip_count()
-
-                    u.color = 0
-                    k.parent.color = 0
-                    k.parent.parent.color = 1
-                    
-                    k = k.parent.parent
-                else:
-                    if k == k.parent.right:
-                        k = k.parent
-                        self.left_rotate(k)
-                    if k.parent.color != k.parent.parent.color:
-                        self.increment_color_flip_count()
-
-                    k.parent.color = 0
-                    k.parent.parent.color = 1
-                    self.right_rotate(k.parent.parent)
-            if k == self.root:
-                break
-        self.root.color = 0
-
 
     def insert_book(self, bookID, bookName, authorName, availabilityStatus, borrowedBy=None):
         node = Node(bookID, bookName, authorName, availabilityStatus, borrowedBy)
@@ -152,70 +103,168 @@ class RedBlackTree:
             u.parent.right = v
         v.parent = u.parent
 
-   
     def fix_delete(self, x):
         while x != self.root and x.color == 0:
             if x == x.parent.left:
                 s = x.parent.right
                 if s.color == 1:
-                    self.increment_color_flip_count()
+                    # Case 1: Sibling s is red
+                    old_color_s = s.color
                     s.color = 0
+                    old_color_parent = x.parent.color
                     x.parent.color = 1
+                    self.increment_color_flip_count(old_color_s, s.color)
+                    self.increment_color_flip_count(old_color_parent, x.parent.color)
                     self.left_rotate(x.parent)
                     s = x.parent.right
 
                 if s.left.color == 0 and s.right.color == 0:
+                    # Case 2: Both of s's children are black
+                    old_color_s = s.color
                     s.color = 1
+                    self.increment_color_flip_count(old_color_s, s.color)
                     x = x.parent
                 else:
                     if s.right.color == 0:
-                        if s.left.color == 1:
-                            self.increment_color_flip_count()
+                        # Case 3: s's left child is red, right child is black
+                        old_color_s_left = s.left.color
                         s.left.color = 0
+                        old_color_s = s.color
                         s.color = 1
+                        self.increment_color_flip_count(old_color_s_left, s.left.color)
+                        self.increment_color_flip_count(old_color_s, s.color)
                         self.right_rotate(s)
                         s = x.parent.right
 
-                    if s.right.color == 1:
-                        self.increment_color_flip_count()
+                    # Case 4: s's right child is red
+                    old_color_s = s.color
                     s.color = x.parent.color
+                    old_color_parent = x.parent.color
                     x.parent.color = 0
+                    old_color_s_right = s.right.color
                     s.right.color = 0
+                    self.increment_color_flip_count(old_color_s, s.color)
+                    self.increment_color_flip_count(old_color_parent, x.parent.color)
+                    self.increment_color_flip_count(old_color_s_right, s.right.color)
                     self.left_rotate(x.parent)
                     x = self.root
             else:
-                # Symmetric cases for right child
                 s = x.parent.left
                 if s.color == 1:
-                    self.increment_color_flip_count()
+                    # Symmetric cases for right child
+                    old_color_s = s.color
                     s.color = 0
+                    old_color_parent = x.parent.color
                     x.parent.color = 1
+                    self.increment_color_flip_count(old_color_s, s.color)
+                    self.increment_color_flip_count(old_color_parent, x.parent.color)
                     self.right_rotate(x.parent)
                     s = x.parent.left
 
                 if s.right.color == 0 and s.left.color == 0:
+                    old_color_s = s.color
                     s.color = 1
+                    self.increment_color_flip_count(old_color_s, s.color)
                     x = x.parent
                 else:
                     if s.left.color == 0:
-                        if s.right.color == 1:
-                            self.increment_color_flip_count()
+                        old_color_s_right = s.right.color
                         s.right.color = 0
+                        old_color_s = s.color
                         s.color = 1
+                        self.increment_color_flip_count(old_color_s_right, s.right.color)
+                        self.increment_color_flip_count(old_color_s, s.color)
                         self.left_rotate(s)
                         s = x.parent.left
 
-                    if s.left.color == 1:
-                        self.increment_color_flip_count()
+                    old_color_s = s.color
                     s.color = x.parent.color
+                    old_color_parent = x.parent.color
                     x.parent.color = 0
+                    old_color_s_left = s.left.color
                     s.left.color = 0
+                    self.increment_color_flip_count(old_color_s, s.color)
+                    self.increment_color_flip_count(old_color_parent, x.parent.color)
+                    self.increment_color_flip_count(old_color_s_left, s.left.color)
                     self.right_rotate(x.parent)
                     x = self.root
 
         if x.color == 0:
+            old_color_x = x.color
             x.color = 1
-            self.increment_color_flip_count()
+            self.increment_color_flip_count(old_color_x, x.color)
+    # Count 1 flip here
+
+    def fix_insert(self, k):
+        while k.parent and k.parent.color == 1:
+            # If k's parent is the right child
+            if k.parent == k.parent.parent.right:
+                u = k.parent.parent.left  # Uncle node
+                # Case when uncle is red (red-red conflict)
+                if u.color == 1:
+                    # Color flip: Parent and uncle to black, grandparent to red
+                    old_color_u = u.color
+                    u.color = 0
+                    old_color_parent = k.parent.color
+                    k.parent.color = 0
+                    old_color_grandparent = k.parent.parent.color
+                    k.parent.parent.color = 1
+                    self.increment_color_flip_count(old_color_u, u.color)
+                    self.increment_color_flip_count(old_color_parent, k.parent.color)
+                    self.increment_color_flip_count(old_color_grandparent, k.parent.parent.color)
+                    k = k.parent.parent
+                else:
+                    # k is a left child
+                    if k == k.parent.left:
+                        k = k.parent
+                        self.right_rotate(k)
+                    # Flip colors and rotate
+                    old_color_parent = k.parent.color
+                    k.parent.color = 0
+                    old_color_grandparent = k.parent.parent.color
+                    k.parent.parent.color = 1
+                    self.increment_color_flip_count(old_color_parent, k.parent.color)
+                    self.increment_color_flip_count(old_color_grandparent, k.parent.parent.color)
+                    self.left_rotate(k.parent.parent)
+            else:
+                # Symmetric to the above case, but k's parent is the left child
+                u = k.parent.parent.right  # Uncle node
+                if u.color == 1:
+                    # Color flip: Parent and uncle to black, grandparent to red
+                    old_color_u = u.color
+                    u.color = 0
+                    old_color_parent = k.parent.color
+                    k.parent.color = 0
+                    old_color_grandparent = k.parent.parent.color
+                    k.parent.parent.color = 1
+                    self.increment_color_flip_count(old_color_u, u.color)
+                    self.increment_color_flip_count(old_color_parent, k.parent.color)
+                    self.increment_color_flip_count(old_color_grandparent, k.parent.parent.color)
+                    k = k.parent.parent
+                else:
+                    # k is a right child
+                    if k == k.parent.right:
+                        k = k.parent
+                        self.left_rotate(k)
+                    # Flip colors and rotate
+                    old_color_parent = k.parent.color
+                    k.parent.color = 0
+                    old_color_grandparent = k.parent.parent.color
+                    k.parent.parent.color = 1
+                    self.increment_color_flip_count(old_color_parent, k.parent.color)
+                    self.increment_color_flip_count(old_color_grandparent, k.parent.parent.color)
+                    self.right_rotate(k.parent.parent)
+
+            # If k is now at the root, break the loop
+            if k == self.root:
+                break
+
+        # Set the color of the root to black
+        old_color_root = self.root.color
+        self.root.color = 0
+        self.increment_color_flip_count(old_color_root, self.root.color)
+
+
 
 
 
@@ -412,5 +461,6 @@ class RedBlackTree:
             self._print_books_in_range_helper(node.right, bookID1, bookID2, books_info)
 
 
-    def increment_color_flip_count(self):
-        self.color_flip_count += 1
+    def increment_color_flip_count(self, old_color, new_color):
+        if old_color != new_color:
+            self.color_flip_count += 1

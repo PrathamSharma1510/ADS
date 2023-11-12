@@ -1,58 +1,113 @@
-Book 2 Borrowed by Patron 2001
-
-Book 2 Reserved by Patron 3002
-
-BookID = 2
-Title = "Book2"
-Author = "Author1"
-Availability = "No"
-BorrowedBy = 2001
-Reservations= [3002]
-
-Book 5 Borrowed by Patron 3002
-
-Book 2 Reserved by Patron 1003
-
-BookID = 4
-Title = "Book4"
-Author = "Author1"
+BookID = 48
+Title = "Data Structures and Algorithms"
+Author = "Sartaj Sahni"
 Availability = "Yes"
 BorrowedBy = None
 Reservations= []
 
-Book 4 Borrowed by Patron 2010
+Book 48 Borrowed by Patron 120
 
-BookID = 2
-Title = "Book2"
-Author = "Author1"
-Availability = No
-BorrowedBy = 2001
-Reservations= [3002, 1003]
+Book 101 Borrowed by Patron 132
 
-BookID = 4
-Title = "Book4"
-Author = "Author1"
-Availability = No
-BorrowedBy = 2010
-Reservations= []
+Book 48 Reserved by Patron 144
 
-BookID = 5
-Title = "Book5"
-Author = "Author3"
-Availability = No
-BorrowedBy = 3002
-Reservations= []
+Book 48 Reserved by Patron 140
 
-Book 2 Reserved by Patron 2010
+Book 48 Reserved by Patron 142
 
-Book 2 Reserved by Patron 1004
+Book 12 Borrowed by Patron 138
 
-Book 2 returned by Patron 2001
-Book 2 Allotted to Patron 3002.
-Book 4 returned by Patron 2010. Now available for borrowing.
-FindClosestBook: BookID: 4, BookName: "Book4", AuthorName: "Author1", AvailabilityStatus: Yes, BorrowedBy: None
-FindClosestBook: BookID: 2, BookName: "Book2", AuthorName: "Author1", AvailabilityStatus: No, BorrowedBy: 3002
-FindClosestBook: BookID: 3, BookName: "Book3", AuthorName: "Author4", AvailabilityStatus: Yes, BorrowedBy: None
+Book 12 Reserved by Patron 150
+
+Book 12 Reserved by Patron 162
+
+Book 48 returned by Patron 120
+Book 48 Allotted to Patron 142.
+FindClosestBook: BookID: 12, BookName: "Artificial Intelligence: A Modern Approach", AuthorName: "Stuart Russell", AvailabilityStatus: No, BorrowedBy: 138
+FindClosestBook: BookID: 6, BookName: "Database Management Systems", AuthorName: "Raghu Ramakrishnan", AvailabilityStatus: Yes, BorrowedBy: None
 DeleteBook: True
-ColorFlipCount: 1
+ColorFlipCount: 10
+Book 73 Borrowed by Patron 111
+
+Book 73 Reserved by Patron 52
+
+Book 25 Borrowed by Patron 153
+
+BookID = 25
+Title = "Computer Networks"
+Author = "Andrew S. Tanenbaum"
+Availability = No
+BorrowedBy = 153
+Reservations= []
+
+BookID = 48
+Title = "Data Structures and Algorithms"
+Author = "Sartaj Sahni"
+Availability = No
+BorrowedBy = 142
+Reservations= [144, 140]
+
+BookID = 73
+Title = "Introduction to the Theory of Computation"
+Author = "Michael Sipser"
+Availability = No
+BorrowedBy = 111
+Reservations= [52]
+
+BookID = 101
+Title = "Introduction to Algorithms"
+Author = "Thomas H. Cormen"
+Availability = No
+BorrowedBy = 132
+Reservations= []
+
+BookID = 115
+Title = "Operating Systems: Internals and Design Principles"
+Author = "William Stallings"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+BookID = 125
+Title = "Computer Organization and Design"
+Author = "David A. Patterson"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+BookID = 132
+Title = "Operating System Concepts"
+Author = "Abraham Silberschatz"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+Book 25 Reserved by Patron 171
+
+Book 132 Borrowed by Patron 2
+
+FindClosestBook: BookID: 48, BookName: "Data Structures and Algorithms", AuthorName: "Sartaj Sahni", AvailabilityStatus: No, BorrowedBy: 142
+Book 101 Reserved by Patron 18
+
+Book 210 Borrowed by Patron 210
+
+Book 73 Reserved by Patron 43
+
+BookID = 210
+Title = "Machine Learning: A Probabilistic Perspective"
+Author = "Kevin P. Murphy"
+Availability = "No"
+BorrowedBy = 210
+Reservations= []
+
+Book 210 Reserved by Patron 34
+
+ColorFlipCount: 25
+DeleteBook: True
+DeleteBook: True
+DeleteBook: True
+ColorFlipCount: 25
+DeleteBook: True
+DeleteBook: True
+ColorFlipCount: 34
 Quit: Terminating the program.
