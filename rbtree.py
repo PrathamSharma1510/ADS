@@ -217,6 +217,7 @@ class RedBlackTree:
         if book_node is None or book_node == self.NIL:
             return "Book not found."
 
+        # Check if the book is available or already borrowed by the same patron
         if book_node.availabilityStatus.strip('\"').lower() == "yes" and book_node.borrowedBy is None:
             book_node.availabilityStatus = "No"
             book_node.borrowedBy = patronID
@@ -225,13 +226,26 @@ class RedBlackTree:
         if book_node.borrowedBy == patronID:
             return f"Patron {patronID} has already borrowed Book {bookID}.\n"
 
-        if any(reservation.patronID == patronID for reservation in reservationHeap.heap):
+        # Check if the patron has already reserved the book
+        if patronID in book_node.reservations:
             return f"Patron {patronID} has already reserved the book {bookID}.\n"
 
         try:
+            # Insert the new reservation into the heap
             reservation = Reservation(patronID, bookID, patronPriority)
             reservationHeap.insert(reservation)
-            book_node.reservations = [res.patronID for res in sorted(reservationHeap.heap)]
+
+            # Insert patronID into the reservations list in sorted order
+            inserted = False
+            for i, res_patronID in enumerate(book_node.reservations):
+                res_priority = next((res.priorityNumber for res in reservationHeap.heap if res.patronID == res_patronID), None)
+                if res_priority is not None and patronPriority < res_priority:
+                    book_node.reservations.insert(i, patronID)
+                    inserted = True
+                    break
+            if not inserted:
+                book_node.reservations.append(patronID)
+
             return f"Book {bookID} Reserved by Patron {patronID}\n"
         except Exception as e:
             return str(e)  # Returns "Waitlist is full" if the exception is raised
