@@ -45,6 +45,33 @@ Reservations= []
 
 Book 2 Reserved by Patron 2010
 
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Patron 2010 has already reserved the book 2.
+
+Unrecognized command.
+Patron 2010 has already reserved the book 2.
+
+Unrecognized command.
+Patron 2010 has already reserved the book 2.
+
+Unrecognized command.
+Patron 2010 has already reserved the book 2.
+
 Book 2 Reserved by Patron 1004
 
 Book 2 returned by Patron 2001
@@ -74,4 +101,6 @@ Reservations= []
 Book 2 is no longer available. Reservation made by Patron 2010,1003,1004 has been cancelled!
 
 ColorFlipCount: 5
+BookId:- 12938 not found in the Library
+
 Quit: Terminating the program.

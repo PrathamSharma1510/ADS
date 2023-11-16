@@ -351,7 +351,7 @@ class RedBlackTree:
             )
             return book_info
         else:
-            return "BookID not found in the Library"
+            return f"BookId:- {bookID} not found in the Library"
         
     def find_closest_book(self, targetID):
         closest = None
