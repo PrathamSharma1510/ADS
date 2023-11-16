@@ -74,21 +74,3 @@ class ReservationHeap:
 
     def _rebuild_index_map(self):
         self.index_map = {reservation.patronID: i for i, reservation in enumerate(self.heap)}
-
-# Example usage:
-# reservation_heap = ReservationHeap()
-# reservation_heap.insert(Reservation("Patron1", 1))
-# reservation_heap.insert(Reservation("Patron2", 2))
-# reservation_heap.print_heap()
-
-# # Remove a reservation
-# reservation_heap.remove("Patron1")
-# reservation_heap.print_heap()
-
-# # Update a reservation's priority
-# reservation_heap.update("Patron2", 1)
-# reservation_heap.print_heap()
-
-# # Extract the reservation with the minimum priority
-# min_reservation = reservation_heap.extract_min()
-# print(f"Extracted reservation: {min_reservation}")

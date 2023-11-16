@@ -216,31 +216,25 @@ class RedBlackTree:
         book_node = self.search_book(bookID)
         if book_node is None or book_node == self.NIL:
             return "Book not found."
-        availability_status = book_node.availabilityStatus.strip('\"').lower()
-        # If the book is available (not borrowed by anyone), lend it to the patron
-        if availability_status == "yes" and book_node.borrowedBy==None:
-            book_node.availabilityStatus = "No"# Update the availability status
-            book_node.borrowedBy = patronID 
-            # print(f"After borrowing: BookID: {book_node.bookID}, Availability: {book_node.availabilityStatus}, BorrowedBy: {book_node.borrowedBy}")
-            # print("hey") # Update with the ID of the patron who borrowed the book
+
+        if book_node.availabilityStatus.strip('\"').lower() == "yes" and book_node.borrowedBy is None:
+            book_node.availabilityStatus = "No"
+            book_node.borrowedBy = patronID
             return f"Book {bookID} Borrowed by Patron {patronID}\n"
 
-        # If the book is already borrowed by the same patron, return a message
         if book_node.borrowedBy == patronID:
             return f"Patron {patronID} has already borrowed Book {bookID}.\n"
 
-        # If the book is borrowed by another patron, add the current patron to the waitlist
-        # but first, check if the patron has already reserved the book
         if any(reservation.patronID == patronID for reservation in reservationHeap.heap):
             return f"Patron {patronID} has already reserved the book {bookID}.\n"
 
-        # If not already reserved, add the patron to the waitlist
-        reservation = Reservation(patronID, bookID, patronPriority)
-        reservation_result = reservationHeap.insert(reservation)
-        book_node.reservations.append(patronID)
-        if reservation_result == "Waitlist is full":
-            return "Unable to reserve book; waitlist is full."
-        return f"Book {bookID} Reserved by Patron {patronID}\n"
+        try:
+            reservation = Reservation(patronID, bookID, patronPriority)
+            reservationHeap.insert(reservation)
+            book_node.reservations = [res.patronID for res in sorted(reservationHeap.heap)]
+            return f"Book {bookID} Reserved by Patron {patronID}\n"
+        except Exception as e:
+            return str(e)  # Returns "Waitlist is full" if the exception is raised
 
 
 
