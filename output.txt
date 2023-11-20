@@ -1,106 +1,137 @@
-Book 2 Borrowed by Patron 2001
+BookID = 48
+Title = "Data Structures and Algorithms"
+Author = "Sartaj Sahni"
+Availability = "Yes"
+BorrowedBy = None
+Reservations= []
 
-Book 2 Reserved by Patron 3002
+Book 48 Borrowed by Patron 120
 
-BookID = 2
-Title = "Book2"
-Author = "Author1"
+Book 101 Borrowed by Patron 132
+
+Book 48 Reserved by Patron 144
+
+Book 48 Reserved by Patron 140
+
+Book 48 Reserved by Patron 142
+
+Book 12 Borrowed by Patron 138
+
+Book 12 Reserved by Patron 150
+
+Book 12 Reserved by Patron 162
+
+Book 48 returned by Patron 120
+Book 48 Allotted to Patron 142.
+BookID = 6
+Title = "Database Management Systems"
+Author = "Raghu Ramakrishnan"
+Availability = "Yes"
+BorrowedBy = None
+Reservations= []
+
+BookID = 12
+Title = "Artificial Intelligence: A Modern Approach"
+Author = "StuartRussell"
 Availability = "No"
-BorrowedBy = 2001
-Reservations= [3002]
+BorrowedBy = 138
+Reservations= [162, 150]
 
-Book 5 Borrowed by Patron 3002
-
-Book 2 Reserved by Patron 1003
-
-BookID = 4
-Title = "Book4"
-Author = "Author1"
-Availability = "Yes"
-BorrowedBy = None
-Reservations= []
-
-Book 4 Borrowed by Patron 2010
-
-BookID = 2
-Title = "Book2"
-Author = "Author1"
-Availability = No
-BorrowedBy = 2001
-Reservations= [3002, 1003]
-
-BookID = 4
-Title = "Book4"
-Author = "Author1"
-Availability = No
-BorrowedBy = 2010
-Reservations= []
-
-BookID = 5
-Title = "Book5"
-Author = "Author3"
-Availability = No
-BorrowedBy = 3002
-Reservations= []
-
-Book 2 Reserved by Patron 2010
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Patron 2010 has already reserved the book 2.
-
-Unrecognized command.
-Patron 2010 has already reserved the book 2.
-
-Unrecognized command.
-Patron 2010 has already reserved the book 2.
-
-Unrecognized command.
-Patron 2010 has already reserved the book 2.
-
-Book 2 Reserved by Patron 1004
-
-Book 2 returned by Patron 2001
-Book 2 Allotted to Patron 3002.
-Book 4 returned by Patron 2010. Now available for borrowing.
-BookID = 2
-Title = "Book2"
-Author = "Author1"
-Availability = "No"
-BorrowedBy = 3002
-Reservations= [2010, 1003, 1004]
-
-BookID = 4
-Title = "Book4"
-Author = "Author1"
-Availability = "Yes"
-BorrowedBy = None
-Reservations= []
-
-BookID = 3
-Title = "Book3"
-Author = "Author4"
-Availability = "Yes"
-BorrowedBy = None
-Reservations= []
-
-Book 2 is no longer available. Reservation made by Patron 2010,1003,1004 has been cancelled!
+Book 12 is no longer available. Reservation made by Patron 162,150 has been cancelled!
 
 ColorFlipCount: 5
-BookId:- 12938 not found in the Library
+Book 73 Borrowed by Patron 111
 
+Book 73 Reserved by Patron 52
+
+Book 25 Borrowed by Patron 153
+
+BookID = 25
+Title = "Computer Networks"
+Author = "Andrew S. Tanenbaum"
+Availability = No
+BorrowedBy = 153
+Reservations= []
+
+BookID = 48
+Title = "Data Structures and Algorithms"
+Author = "Sartaj Sahni"
+Availability = No
+BorrowedBy = 142
+Reservations= [144, 140]
+
+BookID = 73
+Title = "Introduction to the Theory of Computation"
+Author = "MichaelSipser"
+Availability = No
+BorrowedBy = 111
+Reservations= [52]
+
+BookID = 101
+Title = "Introduction to Algorithms"
+Author = "Thomas H. Cormen"
+Availability = No
+BorrowedBy = 132
+Reservations= []
+
+BookID = 115
+Title = "Operating Systems: Internals and Design Principles"
+Author = "William Stallings"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+BookID = 125
+Title = "Computer Organization and Design"
+Author = "David A.Patterson"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+BookID = 132
+Title = "Operating System Concepts"
+Author = "Abraham Silberschatz"
+Availability = Yes
+BorrowedBy = None
+Reservations= []
+
+Book 25 Reserved by Patron 171
+
+Book 132 Borrowed by Patron 2
+
+BookID = 48
+Title = "Data Structures and Algorithms"
+Author = "Sartaj Sahni"
+Availability = "No"
+BorrowedBy = 142
+Reservations= [144, 140]
+
+Book 101 Reserved by Patron 18
+
+Book 210 Borrowed by Patron 210
+
+Book 73 Reserved by Patron 43
+
+BookID = 210
+Title = "Machine Learning: A Probabilistic Perspective"
+Author = "KevinP. Murphy"
+Availability = "No"
+BorrowedBy = 210
+Reservations= []
+
+Book 210 Reserved by Patron 34
+
+ColorFlipCount: 10
+Book 125 is no longer available. 
+
+Book 115 is no longer available. 
+
+Book 210 is no longer available. Reservation made by Patron 34 has been cancelled!
+
+ColorFlipCount: 10
+Book 25 is no longer available. Reservation made by Patron 171 has been cancelled!
+
+Book 80 is no longer available. 
+
+ColorFlipCount: 14
 Quit: Terminating the program.
