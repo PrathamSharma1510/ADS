@@ -6,8 +6,8 @@ from reservationheap import ReservationHeap
 def main(file_name):
     rbt = RedBlackTree()
     rh = ReservationHeap()  # Instance of ReservationHeap to manage reservations
-    
-    with open(file_name, 'r') as f, open('output.txt', 'w') as o:
+    new_filename = file_name[:-4]
+    with open(file_name, 'r') as f, open(new_filename+'_output.txt', 'w') as o:
         for line in f:
             args = re.findall(r'\((.*?)\)', line)
 
