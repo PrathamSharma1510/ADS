@@ -22,12 +22,61 @@ class RedBlackTree:
         self.root = self.NIL
         self.color_flip_count = 0  # To track color flips
 
+    # def left_rotate(self, x):
+    #     y = x.right
+    #     x.right = y.left
+    #     if y.left != self.NIL:
+    #         y.left.parent = x
+
+    #     y.parent = x.parent
+    #     if x.parent is None:
+    #         self.root = y
+    #     elif x == x.parent.left:
+    #         x.parent.left = y
+    #     else:
+    #         x.parent.right = y
+
+    #     y.left = x
+    #     x.parent = y
+
+    #     # Color flip check after rotation
+    #     # if y.color == 1 and x.color == 1:
+    #     #     # Flip color of x and y
+    #     #     x.color = 0
+    #     #     y.color = 0
+    #     #     # Increment color flip count
+    #     #     self.increment_color_flip_count()
+
+    # def right_rotate(self, y):
+    #     x = y.left
+    #     y.left = x.right
+    #     if x.right != self.NIL:
+    #         x.right.parent = y
+
+    #     x.parent = y.parent
+    #     if y.parent is None:
+    #         self.root = x
+    #     elif y == y.parent.right:
+    #         y.parent.right = x
+    #     else:
+    #         y.parent.left = x
+
+    #     x.right = y
+    #     y.parent = x
+
+    #     # Color flip check after rotation
+    #     # if x.color == 1 and y.color == 1:
+    #     #     # Flip color of x and y
+    #     #     x.color = 0
+    #     #     y.color = 0
+    #     #     # Increment color flip count
+    #     #     self.increment_color_flip_count()
+
     def left_rotate(self, x):
         y = x.right
         x.right = y.left
-        if y.left != self.NIL:
+        if y.left != self.NIL:  # Ensure y.left is not NIL before accessing parent
             y.left.parent = x
-
         y.parent = x.parent
         if x.parent is None:
             self.root = y
@@ -35,24 +84,14 @@ class RedBlackTree:
             x.parent.left = y
         else:
             x.parent.right = y
-
         y.left = x
         x.parent = y
-
-        # Color flip check after rotation
-        # if y.color == 1 and x.color == 1:
-        #     # Flip color of x and y
-        #     x.color = 0
-        #     y.color = 0
-        #     # Increment color flip count
-        #     self.increment_color_flip_count()
 
     def right_rotate(self, y):
         x = y.left
         y.left = x.right
-        if x.right != self.NIL:
+        if x.right != self.NIL:  # Ensure x.right is not NIL before accessing parent
             x.right.parent = y
-
         x.parent = y.parent
         if y.parent is None:
             self.root = x
@@ -60,17 +99,8 @@ class RedBlackTree:
             y.parent.right = x
         else:
             y.parent.left = x
-
         x.right = y
         y.parent = x
-
-        # Color flip check after rotation
-        # if x.color == 1 and y.color == 1:
-        #     # Flip color of x and y
-        #     x.color = 0
-        #     y.color = 0
-        #     # Increment color flip count
-        #     self.increment_color_flip_count()
 
 
     def insert_book(self, bookID, bookName, authorName, availabilityStatus, borrowedBy=None):
@@ -200,58 +230,108 @@ class RedBlackTree:
 
     def fix_delete(self, x):
         while x != self.root and x.color == 0:
+            if x.parent is None:
+                break  # If x is root or x's parent is None, exit the loop
+
             if x == x.parent.left:
-                s = x.parent.right
+                s = x.parent.right if x.parent else self.NIL  # Ensure s is not None
                 if s.color == 1:
                     s.color = 0
                     x.parent.color = 1
-                    # self.increment_color_flip_count()  # Color flip
                     self.left_rotate(x.parent)
                     s = x.parent.right
-                if (s.left is None or s.left.color == 0) and (s.right is None or s.right.color == 0):
-                    s.color = 1
-                    # self.increment_color_flip_count()  # Color flip
+
+                if s == self.NIL or (s.left == self.NIL or s.left.color == 0) and (s.right == self.NIL or s.right.color == 0):
+                    if s != self.NIL:
+                        s.color = 1
                     x = x.parent
                 else:
-                    if s.right.color == 0:
-                        s.left.color = 0
+                    if s.right == self.NIL or s.right.color == 0:
+                        if s.left != self.NIL:
+                            s.left.color = 0
                         s.color = 1
-                        # self.increment_color_flip_count()  # Color flip (for s and s.left)
                         self.right_rotate(s)
                         s = x.parent.right
                     s.color = x.parent.color
                     x.parent.color = 0
-                    s.right.color = 0
-                    # self.increment_color_flip_count()  # Color flip (for s, x.parent, and s.right)
+                    if s.right != self.NIL:
+                        s.right.color = 0
                     self.left_rotate(x.parent)
                     x = self.root
             else:
-                s = x.parent.left
+                s = x.parent.left if x.parent else self.NIL  # Ensure s is not None
                 if s.color == 1:
                     s.color = 0
                     x.parent.color = 1
-                    # self.increment_color_flip_count()  # Color flip
                     self.right_rotate(x.parent)
                     s = x.parent.left
-                if (s.left is None or s.left.color == 0) and (s.right is None or s.right.color == 0):
-                    s.color = 1
-                    # self.increment_color_flip_count()  # Color flip
+
+                if s == self.NIL or (s.right == self.NIL or s.right.color == 0) and (s.left == self.NIL or s.left.color == 0):
+                    if s != self.NIL:
+                        s.color = 1
                     x = x.parent
                 else:
-                    if s.left.color == 0:
-                        s.right.color = 0
+                    if s.left == self.NIL or s.left.color == 0:
+                        if s.right != self.NIL:
+                            s.right.color = 0
                         s.color = 1
-                        # self.increment_color_flip_count()  # Color flip (for s and s.right)
                         self.left_rotate(s)
                         s = x.parent.left
                     s.color = x.parent.color
                     x.parent.color = 0
-                    s.left.color = 0
-                    # self.increment_color_flip_count()  # Color flip (for s, x.parent, and s.left)
+                    if s.left != self.NIL:
+                        s.left.color = 0
                     self.right_rotate(x.parent)
                     x = self.root
-        x.color = 1
-        # self.increment_color_flip_count()  # Final color flip if needed
+
+            x.color = 0  # Set x to black to maintain property
+    # def fix_delete(self, x):
+    #     while x != self.root and x.color == 0:
+    #         if x == x.parent.left:
+    #             s = x.parent.right
+    #             if s.color == 1:
+    #                 s.color = 0
+    #                 x.parent.color = 1
+    #                 self.left_rotate(x.parent)
+    #                 s = x.parent.right
+    #             if (s.left == self.NIL or s.left.color == 0) and (s.right == self.NIL or s.right.color == 0):
+    #                 s.color = 1
+    #                 x = x.parent
+    #             else:
+    #                 if s.right == self.NIL or s.right.color == 0:
+    #                     s.left.color = 0
+    #                     s.color = 1
+    #                     self.right_rotate(s)
+    #                     s = x.parent.right
+    #                 s.color = x.parent.color
+    #                 x.parent.color = 0
+    #                 if s.right != self.NIL:  # Check before accessing s.right.color
+    #                     s.right.color = 0
+    #                 self.left_rotate(x.parent)
+    #                 x = self.root
+    #         else:
+    #             s = x.parent.left
+    #             if s.color == 1:
+    #                 s.color = 0
+    #                 x.parent.color = 1
+    #                 self.right_rotate(x.parent)
+    #                 s = x.parent.left
+    #             if (s.right == self.NIL or s.right.color == 0) and (s.left == self.NIL or s.left.color == 0):
+    #                 s.color = 1
+    #                 x = x.parent
+    #             else:
+    #                 if s.left == self.NIL or s.left.color == 0:
+    #                     s.right.color = 0
+    #                     s.color = 1
+    #                     self.left_rotate(s)
+    #                     s = x.parent.left
+    #                 s.color = x.parent.color
+    #                 x.parent.color = 0
+    #                 if s.left != self.NIL:  # Check before accessing s.left.color
+    #                     s.left.color = 0
+    #                 self.right_rotate(x.parent)
+    #                 x = self.root
+    #         x.color = 0
 
 
     def borrow_book(self, patronID, bookID, patronPriority, reservationHeap):
