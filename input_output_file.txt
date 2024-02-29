@@ -1,0 +1,38 @@
+Book 1 Borrowed by Patron 101
+
+Book 2 Borrowed by Patron 102
+
+Book 3 Borrowed by Patron 103
+
+Book 4 Borrowed by Patron 104
+
+Book 5 Borrowed by Patron 105
+
+Book 1 returned by Patron 101. Now available for borrowing.
+Book 1 Borrowed by Patron 106
+
+Book 2 Reserved by Patron 107
+
+Book 3 Reserved by Patron 108
+
+Book 4 Reserved by Patron 109
+
+Book 5 Reserved by Patron 110
+
+Book 2 returned by Patron 102
+Book 2 Allotted to Patron 107.
+Book 1 is no longer available. 
+
+BookID = 10
+Title = "Book10"
+Author = "Author10"
+Availability = "Yes"
+BorrowedBy = None
+Reservations= []
+
+Book 3 returned by Patron 103
+Book 3 Allotted to Patron 108.
+Book 11 Borrowed by Patron 112
+
+Book 11 is no longer available. 
+
